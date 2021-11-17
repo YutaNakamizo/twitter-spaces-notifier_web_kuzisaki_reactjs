@@ -1,6 +1,7 @@
 import React, {
   useState,
   useEffect,
+  createContext,
 } from 'react';
 import {
   Routes,
@@ -16,23 +17,26 @@ import { CommonHeader } from '~/components/CommonHeader';
 import { RouteTop } from '~/routes/RouteTop';
 import { RouteApp } from '~/routes/RouteApp';
 import {
-  handleAuthStateChange,
+  onAuthStateChanged,
 } from '~/apis/auth';
 
 const theme = createTheme({
+});
+
+export const AppContext = createContext({
 });
 
 export const App = () => {
   const navigate = useNavigate();
   const [ user, setUser ] = useState(undefined);
   useEffect(() => {
-    handleAuthStateChange().then(_user => {
-      console.log(_user);
+    onAuthStateChanged(_user => {
+      //console.log(_user);
       setUser(
         _user || null
       );
       navigate('/app', { replace: true });
-    }).catch(err => {
+    }, err => {
       console.error(err);
       setUser(null);
       return;
@@ -40,43 +44,94 @@ export const App = () => {
   }, []);
 
   return (
-    <ThemeProvider
-      theme={theme}
+    <AppContext.Provider
+      value={{
+        user,
+      }}
     >
-      <div className="App">
-        <CommonHeader
-        />
-        
-        <Routes
-        >
-          <Route
-            path="/"
-            element={
-              <RouteTop
-              />
-            }
+      <ThemeProvider
+        theme={theme}
+      >
+        <div className="App">
+          <CommonHeader
           />
 
-          <Route
-            path="/app"
-            element={
-              <RouteApp
-              />
-            }
-          />
+          {(() => {
+            switch(user) {
+              case undefined: {
+                return (
+                  <>
+                    Loading...
+                  </>
+                );
+              }
+              default: {
+                return (
+                  <Routes
+                  >
+                    <Route
+                      path="/"
+                      element={
+                        (() => {
+                          switch(user) {
+                            case null: {
+                              return (
+                                <RouteTop
+                                />
+                              );
+                            }
+                            default: {
+                              return (
+                                <Navigate
+                                  to="/app"
+                                />
+                              );
+                            }
+                          }
+                        })()
+                      }
+                    />
 
-          <Route
-            path="*"
-            element={
-              <Navigate
-                to="/"
-                replace={true}
-              />
+                    <Route
+                      path="/app"
+                      element={
+                        (() => {
+                          switch(user) {
+                            case null: {
+                              return (
+                                <Navigate
+                                  to="/"
+                                />
+                              );
+                            }
+                            default: {
+                              return (
+                                <RouteApp
+                                />
+                              );
+                            }
+                          }
+                        })()
+                      }
+                    />
+
+                    <Route
+                      path="*"
+                      element={
+                        <Navigate
+                          to="/"
+                          replace={true}
+                        />
+                      }
+                    />
+                  </Routes>
+                );
+              }
             }
-          />
-        </Routes>
-      </div>
-    </ThemeProvider>
+          })()}
+        </div>
+      </ThemeProvider>
+    </AppContext.Provider>
   );
 };
 

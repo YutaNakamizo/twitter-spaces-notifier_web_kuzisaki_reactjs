@@ -3,9 +3,11 @@ import {
 } from '~/apis/firebase';
 import {
   getAuth,
+  setPersistence,
+  browserLocalPersistence,
   TwitterAuthProvider,
   signInWithRedirect,
-  onAuthStateChanged,
+  onAuthStateChanged as onAuthStateChanged_firebase,
   signOut as signOut_firebase,
 } from "firebase/auth";
 
@@ -13,18 +15,16 @@ const auth = getAuth();
 const provider = new TwitterAuthProvider();
 
 export const signIn = () => {
-  signInWithRedirect(auth, provider);
-  return;
+  return setPersistence(auth, browserLocalPersistence).then(() => {
+    signInWithRedirect(auth, provider);
+    return;
+  }).catch(err => {
+    throw err;
+  });
 };
 
-export const handleAuthStateChange = () => {
-  return new Promise((resolve, reject) => {
-    onAuthStateChanged(auth, user => {
-      return resolve(user);
-    }, err => {
-      return reject(err);
-    });
-  });
+export const onAuthStateChanged = (onSuccess, onError, onFinish) => {
+  return onAuthStateChanged_firebase(auth, onSuccess, onError, onFinish);
 };
 
 export const signOut = () => {
