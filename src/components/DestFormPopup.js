@@ -12,6 +12,9 @@ import {
   DialogContent,
 } from '@mui/material';
 import { DestForm } from '~/components/DestForm';
+import {
+  _debugRequestWithToken,
+} from '~/apis/backend';
 
 const Transition = forwardRef((props, ref) => (
   <Slide
@@ -71,6 +74,9 @@ export const DestFormPopup = ({
               !formValue.changed
               || !formValue.valid
             }
+            onClick={() => {
+              _debugRequestWithToken('test').then(console.log);
+            }}
           >
             保存
           </Button>

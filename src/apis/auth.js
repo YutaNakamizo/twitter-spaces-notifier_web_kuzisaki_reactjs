@@ -9,6 +9,7 @@ import {
   signInWithRedirect,
   onAuthStateChanged as onAuthStateChanged_firebase,
   signOut as signOut_firebase,
+  getIdToken as getIdToken_firebase,
 } from "firebase/auth";
 
 const auth = getAuth();
@@ -33,5 +34,12 @@ export const signOut = () => {
   }).catch(err => {
     throw err;
   });
+};
+
+export const getIdToken = (user) => {
+  return getIdToken_firebase(
+    user || auth.currentUser,
+    true
+  );
 };
 
