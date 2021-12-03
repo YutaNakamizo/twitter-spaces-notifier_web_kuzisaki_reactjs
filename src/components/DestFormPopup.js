@@ -48,6 +48,14 @@ export const DestFormPopup = ({
     onClose(e);
   };
 
+  const save = (e, values) => {
+    return registerEndpoint(values).then(resp => {
+      console.log(resp.data);
+      onClose(e);
+      return;
+    });
+  };
+
   return (
     <Dialog
       fullScreen
@@ -74,10 +82,8 @@ export const DestFormPopup = ({
               !formValue.changed
               || !formValue.valid
             }
-            onClick={() => {
-              registerEndpoint(
-                formValue.values
-              ).then(console.log);
+            onClick={e => {
+              save(e, formValue.values);
             }}
           >
             保存
