@@ -26,15 +26,58 @@ const destOptions = [
 
 export const DestForm = ({
   onChange = () => {},
-  initialValue = {},
+  initialValue = {
+    label: '',
+    destIndex: 0,
+    destDetails: {},
+  },
   ...props
 }) => {
-  const [ label, setLabel ] = useState();
-  const [ destIndex, setDestIndex ] = useState(0);
-  const [ destDetails, setDestDetails ] = useState({});
+  const [ label, setLabel ] = useState(initialValue.label);
+  const [ destIndex, setDestIndex ] = useState(initialValue.destIndex);
+  const [ destDetails, setDestDetails ] = useState({
+    changed: false,
+    valid: false,
+    values: initialValue.destDetails,
+  });
+  const validate = ({
+    label,
+    destIndex,
+    destDetails,
+  }) => {
+    const result = {
+      changed: false,
+      valid: false,
+    };
+
+    if(
+      label !== initialValue.label
+      || destIndex !== initialValue.destIndex
+      || destDetails.changed
+    ) {
+      result.changed = true;
+    }
+
+    if(
+      label.trim() !== ''
+      && -1 < destIndex && destIndex < destOptions.length
+      && destDetails.valid
+    ) {
+      result.valid = true;
+    }
+
+    return result;
+  };
+
   useEffect(() => {
-    const changed = true;
-    const valid = true;
+    const {
+      changed,
+      valid,
+    } = validate({
+      label,
+      destIndex,
+      destDetails,
+    });
 
     onChange({
       changed,
@@ -42,7 +85,7 @@ export const DestForm = ({
       values: {
         label,
         dest: destOptions[destIndex].value,
-        destDetails: destDetails.value,
+        destDetails: destDetails.values,
       }
     });
   }, [

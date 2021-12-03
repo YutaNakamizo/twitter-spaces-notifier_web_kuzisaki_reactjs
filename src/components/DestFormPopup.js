@@ -32,8 +32,8 @@ export const DestFormPopup = ({
   const [ formValue, setFormValue ] = useState(
     {
       changed: false,
-      valid: true,
-      value: initialValue || {},
+      valid: false,
+      values: initialValue,
     }
   );
   useEffect(() => {
