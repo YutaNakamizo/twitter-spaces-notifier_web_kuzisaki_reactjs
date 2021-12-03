@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "twitter-space-notif"
+  },
+  "targets": {
+    "twitter-space-notif": {
+      "hosting": {
+        "kuzisaki": [
+          "twitter-space-notif-kuzisaki"
+        ]
+      }
+    }
+  }
+}
