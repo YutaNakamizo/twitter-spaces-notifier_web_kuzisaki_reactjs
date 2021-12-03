@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { DestForm } from '~/components/DestForm';
 import {
-  _debugRequestWithToken,
+  registerEndpoint,
 } from '~/apis/backend';
 
 const Transition = forwardRef((props, ref) => (
@@ -75,7 +75,9 @@ export const DestFormPopup = ({
               || !formValue.valid
             }
             onClick={() => {
-              _debugRequestWithToken('test').then(console.log);
+              registerEndpoint(
+                formValue.values
+              ).then(console.log);
             }}
           >
             保存

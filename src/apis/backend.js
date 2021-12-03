@@ -36,3 +36,26 @@ export const _debugRequestWithToken = ({
   });
 };
 
+
+// Endpoint
+export const registerEndpoint = ({
+  label,
+  dest,
+  destDetails,
+}) => {
+  return getRequestInstance().then(request => {
+    console.log(label, dest, JSON.stringify(destDetails))
+    return request({
+      method: 'post',
+      url: '/api/endpoints',
+      data: {
+        label,
+        dest,
+        destDetails,
+      },
+    }).then(resp => {
+      return resp.data;
+    });
+  });
+};
+
