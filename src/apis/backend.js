@@ -49,6 +49,7 @@ export const registerEndpoint = ({
       method: 'post',
       url: '/api/endpoints',
       data: {
+        username: 'kuzichaki',
         label,
         dest,
         destDetails,
