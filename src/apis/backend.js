@@ -60,3 +60,14 @@ export const registerEndpoint = ({
   });
 };
 
+export const listEndpoints = () => {
+  return getRequestInstance().then(request => {
+    return request({
+      method: 'get',
+      'url': '/api/endpoints',
+    }).then(resp => {
+      return resp.data;
+    });
+  });
+};
+
