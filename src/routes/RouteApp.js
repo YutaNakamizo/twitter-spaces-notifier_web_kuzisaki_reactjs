@@ -40,6 +40,13 @@ export const RouteApp = ({
   }, []);
 
   const [ openPopup, setOpenPopup ] = useState(null);
+  const handlePopupClose = forceRefresh => {
+    setOpenPopup(null);
+    if(!forceRefresh) return;
+    
+    reloadEndpoints();
+    return;
+  };
 
   return (
     <>
@@ -101,9 +108,7 @@ export const RouteApp = ({
 
       <DestFormPopup
         open={openPopup !== null}
-        onClose={e => {
-          setOpenPopup(null);
-        }}
+        onClose={handlePopupClose}
       />
     </>
   );

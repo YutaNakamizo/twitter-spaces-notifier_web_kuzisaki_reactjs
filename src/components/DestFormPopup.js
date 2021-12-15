@@ -42,16 +42,16 @@ export const DestFormPopup = ({
     formValue,
   ]);
 
-  const confirmClose = e => {
+  const confirmClose = () => {
     const close = window.confirm('キャンセルすると入力した内容が失われます. 編集をキャンセルしますか？');
     if(!close) return;
-    onClose(e);
+    onClose(false);
   };
 
-  const save = (e, values) => {
+  const save = values => {
     return registerEndpoint(values).then(resp => {
       console.log(resp.data);
-      onClose(e);
+      onClose(true);
       return;
     });
   };
@@ -73,7 +73,11 @@ export const DestFormPopup = ({
         <Box
         >
           <Button
-            onClick={formValue.changed ? confirmClose : onClose}
+            onClick={formValue.changed ? (
+              e => confirmClose()
+            ) : (
+              e => onClose(false)
+            )}
           >
             キャンセル
           </Button>
@@ -83,7 +87,7 @@ export const DestFormPopup = ({
               || !formValue.valid
             }
             onClick={e => {
-              save(e, formValue.values);
+              save(formValue.values);
             }}
           >
             保存
