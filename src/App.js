@@ -13,6 +13,9 @@ import {
   createTheme,
   ThemeProvider,
 } from '@mui/material/styles';
+import {
+  red,
+} from '@mui/material/colors';
 import { CommonHeader } from '~/components/CommonHeader';
 import { RouteTop } from '~/routes/RouteTop';
 import { RouteApp } from '~/routes/RouteApp';
@@ -21,6 +24,9 @@ import {
 } from '~/apis/auth';
 
 const theme = createTheme({
+  palette: {
+    warning: red,
+  },
 });
 
 export const AppContext = createContext({

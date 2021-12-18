@@ -93,3 +93,15 @@ export const updateEndpoint = (id, {
   });
 };
 
+export const removeEndpoint = id => {
+  return getRequestInstance().then(request => {
+    console.log(id);
+    return request({
+      method: 'delete',
+      url: `/api/endpoints/${id}`,
+    }).then(resp => {
+      return resp.data;
+    });
+  });
+};
+

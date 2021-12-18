@@ -51,7 +51,14 @@ export const EndpointsListItem = ({
               <IconButton
                 disabled={removeDisabled}
                 onClick={e => {
-                  onRemoveClick();
+                  onRemoveClick({
+                    id,
+                    label,
+                    dest,
+                    destDetails,
+                    createTime,
+                    updateTime,
+                  });
                 }}
               >
                 <DeleteOutlinedIcon
