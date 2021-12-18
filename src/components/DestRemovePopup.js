@@ -2,12 +2,14 @@ import React, {
   useState,
 } from 'react';
 import {
+  Box,
   Dialog,
   DialogTitle,
   DialogActions,
   DialogContent,
   DialogContentText,
   Button,
+  LinearProgress,
 } from '@mui/material';
 
 export const DestRemovePopup = ({
@@ -28,10 +30,25 @@ export const DestRemovePopup = ({
     <Dialog
       {...props}
     >
-      <DialogTitle
+      <Box
+        position="relative"
       >
-        "{endpoint.label}" を削除しますか？
-      </DialogTitle>
+        <DialogTitle
+        >
+          "{endpoint.label}" を削除しますか？
+        </DialogTitle>
+        
+        {removing && (
+          <LinearProgress
+            sx={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              left: 0,
+            }}
+          />
+        )}
+      </Box>
 
       <DialogContent
       >

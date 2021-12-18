@@ -10,6 +10,7 @@ import {
   Toolbar,
   Button,
   DialogContent,
+  LinearProgress,
 } from '@mui/material';
 import { DestForm } from '~/components/DestForm';
 
@@ -61,36 +62,51 @@ export const DestFormPopup = ({
       {...props}
       TransitionComponent={Transition}
     >
-      <Toolbar
+      <Box
+        position="relative"
       >
-        <Box
-          flexGrow={1}
-        />
-
-        <Box
+        <Toolbar
         >
-          <Button
-            disabled={saving}
-            onClick={formValue.changed ? (
-              e => confirmClose()
-            ) : (
-              e => onClose(false)
-            )}
+          <Box
+            flexGrow={1}
+          />
+
+          <Box
           >
-            キャンセル
-          </Button>
-          <Button
-            disabled={
-              !formValue.changed
-              || !formValue.valid
-              || saving
-            }
-            onClick={handleSaveClick}
-          >
-            保存
-          </Button>
-        </Box>
-      </Toolbar>
+            <Button
+              disabled={saving}
+              onClick={formValue.changed ? (
+                e => confirmClose()
+              ) : (
+                e => onClose(false)
+              )}
+            >
+              キャンセル
+            </Button>
+            <Button
+              disabled={
+                !formValue.changed
+                || !formValue.valid
+                || saving
+              }
+              onClick={handleSaveClick}
+            >
+              保存
+            </Button>
+          </Box>
+        </Toolbar>
+        
+        {saving && (
+          <LinearProgress
+            sx={{
+              position: 'absolute',
+              right: 0,
+              bottom: 0,
+              left: 0,
+            }}
+          />
+        )}
+      </Box>
 
       <DialogContent
         dividers
