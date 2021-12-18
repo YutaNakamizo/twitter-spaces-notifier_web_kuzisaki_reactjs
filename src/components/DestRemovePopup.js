@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  useState,
+} from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -14,6 +16,14 @@ export const DestRemovePopup = ({
   endpoint,
   ...props
 }) => {
+  const [ removing, setRemoving ] = useState(false);
+  const handleRemoveClick = e => {
+    setRemoving(true);
+    onRemoveClick(endpoint.id).catch(err => {
+      setRemoving(false);
+    });
+  };
+
   return (
     <Dialog
       {...props}
@@ -34,6 +44,7 @@ export const DestRemovePopup = ({
       <DialogActions
       >
         <Button
+          disabled={removing}
           onClick={e => {
             onClose(false);
           }}
@@ -44,10 +55,9 @@ export const DestRemovePopup = ({
         <Button
           color="warning"
           variant="contained"
+          disabled={removing}
           disableElevation
-          onClick={e => {
-            onRemoveClick(endpoint.id);
-          }}
+          onClick={handleRemoveClick}
         >
           削除
         </Button>
