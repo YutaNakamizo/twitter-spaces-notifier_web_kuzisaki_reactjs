@@ -17,6 +17,7 @@ import {
   red,
 } from '@mui/material/colors';
 import { CommonHeader } from '~/components/CommonHeader';
+import { RouteLoading } from '~/routes/RouteLoading';
 import { RouteTop } from '~/routes/RouteTop';
 import { RouteApp } from '~/routes/RouteApp';
 import { RouteSignOut } from '~/routes/RouteSignOut';
@@ -61,94 +62,95 @@ export const App = () => {
         theme={theme}
       >
         <div className="App">
-          <CommonHeader
-          />
-
           {(() => {
             switch(user) {
               case undefined: {
                 return (
-                  <>
-                    Loading...
-                  </>
+                  <RouteLoading
+                  />
                 );
               }
               default: {
                 return (
-                  <Routes
-                  >
-                    <Route
-                      path="/"
-                      element={
-                        (() => {
-                          switch(user) {
-                            case null: {
-                              return (
-                                <RouteTop
-                                />
-                              );
-                            }
-                            default: {
-                              return (
-                                <Navigate
-                                  to="/app"
-                                />
-                              );
-                            }
-                          }
-                        })()
-                      }
+                  <>
+                    <CommonHeader
                     />
 
-                    <Route
-                      path="/app"
-                      element={
-                        (() => {
-                          switch(user) {
-                            case null: {
-                              return (
-                                <Navigate
-                                  to="/"
-                                />
-                              );
+                    <Routes
+                    >
+                      <Route
+                        path="/"
+                        element={
+                          (() => {
+                            switch(user) {
+                              case null: {
+                                return (
+                                  <RouteTop
+                                  />
+                                );
+                              }
+                              default: {
+                                return (
+                                  <Navigate
+                                    to="/app"
+                                  />
+                                );
+                              }
                             }
-                            default: {
-                              return (
-                                <RouteApp
-                                />
-                              );
+                          })()
+                        }
+                      />
+
+                      <Route
+                        path="/app"
+                        element={
+                          (() => {
+                            switch(user) {
+                              case null: {
+                                return (
+                                  <Navigate
+                                    to="/"
+                                  />
+                                );
+                              }
+                              default: {
+                                return (
+                                  <RouteApp
+                                  />
+                                );
+                              }
                             }
-                          }
-                        })()
-                      }
-                    />
+                          })()
+                        }
+                      />
 
-                    <Route
-                      path="/signout"
-                      element={
-                        <RouteSignOut
-                        />
-                      }
-                    />
+                      <Route
+                        path="/signout"
+                        element={
+                          <RouteSignOut
+                          />
+                        }
+                      />
 
-                    <Route
-                      path="*"
-                      element={
-                        <Navigate
-                          to="/"
-                          replace={true}
-                        />
-                      }
+                      <Route
+                        path="*"
+                        element={
+                          <Navigate
+                            to="/"
+                            replace={true}
+                          />
+                        }
+                      />
+                    </Routes>
+
+                    <CommonFooter
+                      mt={8}
                     />
-                  </Routes>
+                  </>
                 );
               }
             }
           })()}
-
-          <CommonFooter
-            mt={8}
-          />
         </div>
       </ThemeProvider>
     </AppContext.Provider>
