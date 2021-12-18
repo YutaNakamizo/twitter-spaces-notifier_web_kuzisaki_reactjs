@@ -4,6 +4,8 @@ import React, {
 } from 'react';
 import {
   Box,
+  FormControl,
+  InputLabel,
   Select,
   MenuItem,
   TextField,
@@ -25,7 +27,8 @@ export const DestFormOptionsJSON = ({
 }) => {
   const [ method, setMethod ] = useState(initialValue.method);
   const [ url, setUrl ] = useState(initialValue.url);
-  
+
+  const [ urlError, setUrlError ] = useState(null);
   const validate = ({
     method,
     url,
@@ -43,24 +46,32 @@ export const DestFormOptionsJSON = ({
       result.changed = true;
     }
     
+    const methodIsValid = methodOptions.includes(method);
+    const urlIsValid = validator.isURL(url, {
+      require_protocol: true,
+      require_valid_protocol: true,
+      protocols: [
+        'http',
+        'https',
+      ],
+      require_host: true,
+      require_port: false,
+      allow_protocol_relative_urls: false,
+      allow_fragments: true,
+      allow_query_components: true,
+      validate_length: true,
+    });
+
+    if(urlIsValid) {
+      setUrlError(null);
+    }
+    else {
+      setUrlError('URL の形式が正しくありません.');
+    }
+
     if(
-      methodOptions.includes(method)
-      && (
-        validator.isURL(url, {
-          require_protocol: true,
-          require_valid_protocol: true,
-          protocols: [
-            'http',
-            'https',
-          ],
-          require_host: true,
-          require_port: false,
-          allow_protocol_relative_urls: false,
-          allow_fragments: true,
-          allow_query_components: true,
-          validate_length: true,
-        })
-      )
+      methodIsValid
+      && urlIsValid
     ) {
       result.valid = true;
     }
@@ -90,34 +101,54 @@ export const DestFormOptionsJSON = ({
     url,
   ]);
 
+  const [ urlTouched, setUrlTouched ] = useState(false);
+
   return (
     <>
       <Box
         display="flex"
       >
-        <Select
-          value={method}
-          defaultValue={initialValue.method}
-          onChange={e => {
-            setMethod(e.target.value);
-          }}
+        <Box
+          mr={.5}
         >
-          {methodOptions.map(methodName => (
-            <MenuItem
-              value={methodName}
-              key={methodName}
+          <FormControl
+            variant="standard"
+          >
+            <InputLabel
             >
-              {methodName}
-            </MenuItem>
-          ))}
-        </Select>
+              Method
+            </InputLabel>
+            <Select
+              value={method}
+              defaultValue={initialValue.method}
+              onChange={e => {
+                setMethod(e.target.value);
+              }}
+            >
+              {methodOptions.map(methodName => (
+                <MenuItem
+                  value={methodName}
+                  key={methodName}
+                >
+                  {methodName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+
         <TextField
           label="送信先 URL"
           defaultValue={initialValue.url}
+          error={urlTouched && Boolean(urlError)}
+          helperText={urlTouched ? urlError : undefined}
           variant="standard"
           fullWidth
           onChange={e => {
             setUrl(e.target.value);
+          }}
+          onBlur={e => {
+            setUrlTouched(true);
           }}
         />
       </Box>

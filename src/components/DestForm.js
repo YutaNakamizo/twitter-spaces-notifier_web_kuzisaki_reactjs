@@ -4,6 +4,8 @@ import React, {
 } from 'react';
 import {
   TextField,
+  FormControl,
+  InputLabel,
   Select,
   MenuItem,
   Box,
@@ -29,6 +31,8 @@ export const DestForm = ({
     valid: false,
     values: initialValue.destDetails,
   });
+  
+  const [ labelError, setLabelError ] = useState(null);
   const validate = ({
     label,
     destIndex,
@@ -47,10 +51,21 @@ export const DestForm = ({
       result.changed = true;
     }
 
+    const labelIsValid = label.trim() !== '';
+    const destIndexIsValid = -1 < destIndex && destIndex < destOptions.length;
+    const destDetailsIsValid = destDetails?.valid;
+
+    if(labelIsValid) {
+      setLabelError(null);
+    }
+    else {
+      setLabelError('ラベルは必須です.');
+    }
+
     if(
-      label.trim() !== ''
-      && -1 < destIndex && destIndex < destOptions.length
-      && destDetails?.valid
+      labelIsValid
+      && destIndexIsValid
+      && destDetailsIsValid
     ) {
       result.valid = true;
     }
@@ -83,68 +98,97 @@ export const DestForm = ({
     destDetails,
   ]);
 
+  const [ labelTouched, setLabelTouched ] = useState(false);
+
   return (
     <>
-      <TextField
-        label="ラベル"
-        defaultValue={initialValue.label}
-        variant="standard"
-        placeholder={`例) ${destOptions[destIndex].sampleText}`}
-        fullWidth
-        autoFocus
-        onChange={e => {
-          setLabel(e.target.value);
-        }}
-      />
-
-      <Select
-        value={destOptions[destIndex].value}
-        defaultValue={destOptions[initialValue.destIndex].value}
-        onChange={e => {
-          setDestIndex(destOptions.findIndex(option => option.value === e.target.value));
-        }}
+      <Box
+        mb={4}
       >
-        {destOptions.map(({
-          value,
-          label,
-        }, index) => (
-          <MenuItem
-            key={index}
-            value={value}
-          >
-            {label}
-          </MenuItem>
-        ))}
-      </Select>
+        <TextField
+          label="ラベル"
+          defaultValue={initialValue.label}
+          error={labelTouched && Boolean(labelError)}
+          helperText={labelTouched ? labelError : undefined}
+          variant="standard"
+          placeholder={`例) ${destOptions[destIndex].sampleText}`}
+          fullWidth
+          autoFocus
+          onChange={e => {
+            setLabel(e.target.value);
+          }}
+          onBlur={e => {
+            setLabelTouched(true);
+          }}
+        />
+      </Box>
       
       <Box
+        mb={4}
       >
-        {(() => {
-          switch(destOptions[destIndex].value) {
-            case 'discord-webhook': {
-              return (
-                <>
-                  <DestFormOptionsDiscordWebhook
-                    initialValue={initialValue.destDetails}
-                    onChange={setDestDetails}
-                  />
-                </>
-              );
+        <Box
+          mb={.5}
+        >
+          <FormControl
+            variant="standard"
+          >
+            <InputLabel
+            >
+              通知先
+            </InputLabel>
+              
+            <Select
+              variant="standard"
+              value={destOptions[destIndex].value}
+              defaultValue={destOptions[initialValue.destIndex].value}
+              onChange={e => {
+                setDestIndex(destOptions.findIndex(option => option.value === e.target.value));
+              }}
+            >
+              {destOptions.map(({
+                value,
+                label,
+              }, index) => (
+                <MenuItem
+                  key={index}
+                  value={value}
+                >
+                  {label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+
+        <Box
+        >
+          {(() => {
+            switch(destOptions[destIndex].value) {
+              case 'discord-webhook': {
+                return (
+                  <>
+                    <DestFormOptionsDiscordWebhook
+                      initialValue={initialValue.destDetails}
+                      onChange={setDestDetails}
+                    />
+                  </>
+                );
+              }
+              case 'json': {
+                return (
+                  <>
+                    <DestFormOptionsJSON
+                      initialValue={initialValue.destDetails}
+                      onChange={setDestDetails}
+                    />
+                  </>
+                );
+              }
+              default: {
+              }
             }
-            case 'json': {
-              return (
-                <>
-                  <DestFormOptionsJSON
-                    initialValue={initialValue.destDetails}
-                    onChange={setDestDetails}
-                  />
-                </>
-              );
-            }
-            default: {
-            }
-          }
-        })()}
+          })()}
+        </Box>
       </Box>
     </>
   );

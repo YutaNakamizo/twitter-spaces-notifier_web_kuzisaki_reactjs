@@ -15,6 +15,8 @@ export const DestFormOptionsDiscordWebhook = ({
   ...props
 }) => {
   const [ url, setUrl ] = useState(initialValue.url);
+
+  const [ urlError, setUrlError ] = useState(null);
   const validate = ({
     url,
   }) => {
@@ -47,6 +49,10 @@ export const DestFormOptionsDiscordWebhook = ({
       && url.startsWith('https://discord.com/api/webhooks/')
     ) {
       result.valid = true;
+      setUrlError(null);
+    }
+    else {
+      setUrlError('Webhook URL の形式が正しくありません.');
     }
 
     return result;
@@ -71,15 +77,22 @@ export const DestFormOptionsDiscordWebhook = ({
     url,
   ]);
 
+  const [ urlTouched, setUrlTouched ] = useState(false);
+
   return (
     <>
       <TextField
         label="Webhook URL"
         defaultValue={initialValue.url}
+        error={urlTouched && Boolean(urlError)}
+        helperText={urlTouched ? urlError : undefined}
         variant="standard"
         fullWidth
         onChange={e => {
           setUrl(e.target.value);
+        }}
+        onBlur={e => {
+          setUrlTouched(true);
         }}
       />
     </>
