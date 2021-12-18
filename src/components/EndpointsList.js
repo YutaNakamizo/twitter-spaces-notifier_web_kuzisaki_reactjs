@@ -37,7 +37,7 @@ export const EndpointsList = ({
               </>
             ) : (
               <>
-                No Contents
+                通知先が登録されていません.
               </>
             )
           );
@@ -45,7 +45,6 @@ export const EndpointsList = ({
         else {
           return (
             <>
-              Please wait...
             </>
           );
         }
