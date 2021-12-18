@@ -7,6 +7,7 @@ import {
   Container,
   Toolbar,
   Button,
+  LinearProgress,
   useTheme,
   useMediaQuery,
 } from '@mui/material';
@@ -121,60 +122,75 @@ export const RouteApp = ({
     <>
       <Container
       >
-        <Toolbar
-          disableGutters
+        <Box
+          position="relative"
         >
-          <Box
-            display="flex"
+          <Toolbar
+            disableGutters
           >
-            <Button
-              variant="contained"
-              disabled={
-                openPopup !== null
-              }
-              disableElevation
-              startIcon={
-                <AddIcon
-                />
-              }
-              onClick={e => {
-                handleAddClick();
-              }}
+            <Box
+              display="flex"
             >
-              通知先を追加
-            </Button>
-          </Box>
+              <Button
+                variant="contained"
+                disabled={
+                  openPopup !== null
+                }
+                disableElevation
+                startIcon={
+                  <AddIcon
+                  />
+                }
+                onClick={e => {
+                  handleAddClick();
+                }}
+              >
+                通知先を追加
+              </Button>
+            </Box>
 
-          <Box
-            display="flex"
-            flexGrow={1}
-          />
-          
-          <Box
-            display="flex"
-          >
-            <Button
-              variant="outlined"
-              disabled={
-                loadingEndpoints
-                || openPopup !== null
-              }
-              startIcon={
-                <RefreshIcon
-                />
-              }
-              onClick={e => {
-                reloadEndpoints();
-              }}
+            <Box
+              display="flex"
+              flexGrow={1}
+            />
+            
+            <Box
+              display="flex"
             >
-              {loadingEndpoints ? (
-                '更新中'
-              ) : (
-                '最新情報に更新'
-              )}
-            </Button>
-          </Box>
-        </Toolbar>
+              <Button
+                variant="outlined"
+                disabled={
+                  loadingEndpoints
+                  || openPopup !== null
+                }
+                startIcon={
+                  <RefreshIcon
+                  />
+                }
+                onClick={e => {
+                  reloadEndpoints();
+                }}
+              >
+                {loadingEndpoints ? (
+                  '更新中'
+                ) : (
+                  '最新情報に更新'
+                )}
+              </Button>
+            </Box>
+          </Toolbar>
+          
+          {loadingEndpoints && (
+            <LinearProgress
+              sx={{
+                position: 'absolute',
+                right: 0,
+                bottom: 0,
+                left: 0,
+              }}
+            />
+          )}
+        </Box>
 
         <EndpointsList
           endpoints={endpoints}
