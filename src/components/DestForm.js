@@ -18,7 +18,7 @@ export const DestForm = ({
   initialValue = {
     label: '',
     destIndex: 0,
-    destDetails: {},
+    destDetails: undefined,
   },
   ...props
 }) => {
@@ -42,7 +42,7 @@ export const DestForm = ({
     if(
       label !== initialValue.label
       || destIndex !== initialValue.destIndex
-      || destDetails.changed
+      || destDetails?.changed
     ) {
       result.changed = true;
     }
@@ -50,7 +50,7 @@ export const DestForm = ({
     if(
       label.trim() !== ''
       && -1 < destIndex && destIndex < destOptions.length
-      && destDetails.valid
+      && destDetails?.valid
     ) {
       result.valid = true;
     }
