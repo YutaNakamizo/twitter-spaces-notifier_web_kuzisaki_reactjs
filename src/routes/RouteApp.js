@@ -17,6 +17,7 @@ import {
   listEndpoints,
   registerEndpoint,
   updateEndpoint,
+  removeEndpoint,
 } from '~/apis/backend';
 
 const destOptions = require('~/destOptions');
@@ -88,7 +89,11 @@ export const RouteApp = ({
   };
 
   const remove = id => {
-   
+    return removeEndpoint(removingEndpoint.id).then(resp => {
+      console.log(resp);
+      handlePopupClose(true);
+      return;
+    });
   };
 
   return (
