@@ -75,6 +75,7 @@ export const DestFormOptionsDiscordWebhook = ({
     <>
       <TextField
         label="Webhook URL"
+        defaultValue={initialValue.url}
         variant="standard"
         fullWidth
         onChange={e => {

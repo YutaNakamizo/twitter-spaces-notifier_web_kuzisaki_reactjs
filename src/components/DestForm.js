@@ -11,18 +11,7 @@ import {
 import { DestFormOptionsDiscordWebhook } from '~/components/DestFormOptionsDiscordWebhook';
 import { DestFormOptionsJSON } from '~/components/DestFormOptionsJSON';
 
-const destOptions = [
-  {
-    value: 'discord-webhook',
-    label: 'Discord (Webhook)',
-    sampleText: 'サークル Discord サーバ',
-  },
-  {
-    value: 'json',
-    label: 'JSON (開発者向け)',
-    sampleText: '自作 bot 用',
-  },
-];
+const destOptions = require('~/destOptions');
 
 export const DestForm = ({
   onChange = () => {},
@@ -98,6 +87,7 @@ export const DestForm = ({
     <>
       <TextField
         label="ラベル"
+        defaultValue={initialValue.label}
         variant="standard"
         placeholder={`例) ${destOptions[destIndex].sampleText}`}
         fullWidth
@@ -109,6 +99,7 @@ export const DestForm = ({
 
       <Select
         value={destOptions[destIndex].value}
+        defaultValue={destOptions[initialValue.destIndex].value}
         onChange={e => {
           setDestIndex(destOptions.findIndex(option => option.value === e.target.value));
         }}
@@ -134,6 +125,7 @@ export const DestForm = ({
               return (
                 <>
                   <DestFormOptionsDiscordWebhook
+                    initialValue={initialValue.destDetails}
                     onChange={setDestDetails}
                   />
                 </>
@@ -143,6 +135,7 @@ export const DestForm = ({
               return (
                 <>
                   <DestFormOptionsJSON
+                    initialValue={initialValue.destDetails}
                     onChange={setDestDetails}
                   />
                 </>

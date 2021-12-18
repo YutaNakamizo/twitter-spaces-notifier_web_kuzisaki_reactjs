@@ -97,6 +97,7 @@ export const DestFormOptionsJSON = ({
       >
         <Select
           value={method}
+          defaultValue={initialValue.method}
           onChange={e => {
             setMethod(e.target.value);
           }}
@@ -112,6 +113,7 @@ export const DestFormOptionsJSON = ({
         </Select>
         <TextField
           label="送信先 URL"
+          defaultValue={initialValue.url}
           variant="standard"
           fullWidth
           onChange={e => {

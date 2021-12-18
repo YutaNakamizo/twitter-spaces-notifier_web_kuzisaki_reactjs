@@ -7,6 +7,10 @@ import { EndpointsListItem } from '~/components/EndpointsListItem';
 
 export const EndpointsList = ({
   endpoints = [],
+  onEditClick,
+  editDisabled = false,
+  onRemoveClick,
+  removeDisabled = false,
   ...props
 }) => {
   return (
@@ -23,6 +27,10 @@ export const EndpointsList = ({
                 {endpoints.map(endpoint => (
                   <EndpointsListItem
                     key={endpoint.id}
+                    onEditClick={onEditClick}
+                    editDisabled={editDisabled}
+                    onRemoveClick={onRemoveClick}
+                    removeDisabled={removeDisabled}
                     {...endpoint}
                   />
                 ))}

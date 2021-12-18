@@ -16,6 +16,8 @@ import {
   listEndpoints,
 } from '~/apis/backend';
 
+const destOptions = require('~/destOptions');
+
 export const RouteApp = ({
   ...props
 }) => {
@@ -46,6 +48,18 @@ export const RouteApp = ({
     
     reloadEndpoints();
     return;
+  };
+  
+  const [ editingEndpoint, setEditingEndpoint ] = useState(null);
+  const [ editInitialValue, setEditInitialValue ] = useState(null);
+  const handleEditClick = endpoint => {
+    setEditingEndpoint(endpoint);
+    setEditInitialValue({
+      label: endpoint.label,
+      destIndex: destOptions.findIndex(d => d.value === endpoint.dest),
+      destDetails: endpoint.destDetails,
+    });
+    setOpenPopup('edit');
   };
 
   return (
@@ -103,13 +117,28 @@ export const RouteApp = ({
 
         <EndpointsList
           endpoints={endpoints}
+          onEditClick={handleEditClick}
+          editDisabled={
+            loadingEndpoints
+            && openPopup !== null
+          }
         />
       </Container>
-
+      
+      {/* Add new endpoint */}
       <DestFormPopup
-        open={openPopup !== null}
+        open={openPopup === 'add'}
         onClose={handlePopupClose}
       />
+      
+      {/* Edit endpoint */}
+      {editingEndpoint !== null && (
+        <DestFormPopup
+          initialValue={editInitialValue}
+          open={openPopup === 'edit'}
+          onClose={handlePopupClose}
+        />
+      )}
     </>
   );
 };
