@@ -11,9 +11,6 @@ import {
   Typography,
   Button,
 } from '@mui/material';
-import {
-  signOut,
-} from '~/apis/auth';
 import { AppContext } from '~/App';
 
 export const CommonHeader = ({
@@ -25,8 +22,7 @@ export const CommonHeader = ({
 
   const navigate = useNavigate();
   const handleSignOutClick = e => {
-    signOut();
-    navigate('/', { replace: true });
+    navigate('/signout', { replace: true });
   };
 
   return (
