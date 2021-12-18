@@ -112,6 +112,7 @@ export const DestFormPopup = ({
         dividers
       >
         <DestForm
+          disabled={saving}
           initialValue={initialValue}
           onChange={setFormValue}
         />

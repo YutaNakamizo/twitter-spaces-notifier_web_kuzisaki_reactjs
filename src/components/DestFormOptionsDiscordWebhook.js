@@ -9,6 +9,7 @@ import validator from 'validator';
 
 export const DestFormOptionsDiscordWebhook = ({
   onChange = () => {},
+  disabled = false,
   initialValue = {
     url: '',
   },
@@ -83,6 +84,9 @@ export const DestFormOptionsDiscordWebhook = ({
     <>
       <TextField
         label="Webhook URL"
+        disabled={
+          Boolean(disabled)
+        }
         defaultValue={initialValue.url}
         error={urlTouched && Boolean(urlError)}
         helperText={urlTouched ? urlError : undefined}

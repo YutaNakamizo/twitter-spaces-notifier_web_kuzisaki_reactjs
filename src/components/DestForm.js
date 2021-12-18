@@ -17,6 +17,7 @@ const destOptions = require('~/destOptions');
 
 export const DestForm = ({
   onChange = () => {},
+  disabled = false,
   initialValue = {
     label: '',
     destIndex: 0,
@@ -107,6 +108,9 @@ export const DestForm = ({
       >
         <TextField
           label="ラベル"
+          disabled={
+            Boolean(disabled)
+          }
           defaultValue={initialValue.label}
           error={labelTouched && Boolean(labelError)}
           helperText={labelTouched ? labelError : undefined}
@@ -130,6 +134,9 @@ export const DestForm = ({
           mb={.5}
         >
           <FormControl
+            disabled={
+              Boolean(disabled)
+            }
             variant="standard"
           >
             <InputLabel
@@ -168,6 +175,9 @@ export const DestForm = ({
                 return (
                   <>
                     <DestFormOptionsDiscordWebhook
+                      disabled={
+                        Boolean(disabled)
+                      }
                       initialValue={initialValue.destDetails}
                       onChange={setDestDetails}
                     />
@@ -178,6 +188,9 @@ export const DestForm = ({
                 return (
                   <>
                     <DestFormOptionsJSON
+                      disabled={
+                        Boolean(disabled)
+                      }
                       initialValue={initialValue.destDetails}
                       onChange={setDestDetails}
                     />

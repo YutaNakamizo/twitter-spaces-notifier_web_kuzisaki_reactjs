@@ -19,6 +19,7 @@ const methodOptions = [
 
 export const DestFormOptionsJSON = ({
   onChange = () => {},
+  disabled = false,
   initialValue = {
     method: methodOptions[0],
     url: '',
@@ -112,6 +113,9 @@ export const DestFormOptionsJSON = ({
           mr={.5}
         >
           <FormControl
+            disabled={
+              Boolean(disabled)
+            }
             variant="standard"
           >
             <InputLabel
@@ -139,6 +143,9 @@ export const DestFormOptionsJSON = ({
 
         <TextField
           label="送信先 URL"
+          disabled={
+            Boolean(disabled)
+          }
           defaultValue={initialValue.url}
           error={urlTouched && Boolean(urlError)}
           helperText={urlTouched ? urlError : undefined}
