@@ -12,9 +12,6 @@ import {
   DialogContent,
 } from '@mui/material';
 import { DestForm } from '~/components/DestForm';
-import {
-  registerEndpoint,
-} from '~/apis/backend';
 
 const Transition = forwardRef((props, ref) => (
   <Slide
@@ -26,6 +23,7 @@ const Transition = forwardRef((props, ref) => (
 
 export const DestFormPopup = ({
   onClose = () => {},
+  onSaveClick = () => {},
   initialValue,
   ...props
 }) => {
@@ -46,14 +44,6 @@ export const DestFormPopup = ({
     const close = window.confirm('キャンセルすると入力した内容が失われます. 編集をキャンセルしますか？');
     if(!close) return;
     onClose(false);
-  };
-
-  const save = values => {
-    return registerEndpoint(values).then(resp => {
-      console.log(resp.data);
-      onClose(true);
-      return;
-    });
   };
 
   return (
@@ -87,7 +77,7 @@ export const DestFormPopup = ({
               || !formValue.valid
             }
             onClick={e => {
-              save(formValue.values);
+              onSaveClick(formValue.values);
             }}
           >
             保存

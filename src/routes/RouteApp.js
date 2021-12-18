@@ -14,6 +14,8 @@ import { EndpointsList } from '~/components/EndpointsList';
 import { DestFormPopup } from '~/components/DestFormPopup';
 import {
   listEndpoints,
+  registerEndpoint,
+  updateEndpoint,
 } from '~/apis/backend';
 
 const destOptions = require('~/destOptions');
@@ -60,6 +62,22 @@ export const RouteApp = ({
       destDetails: endpoint.destDetails,
     });
     setOpenPopup('edit');
+  };
+
+  const register = values => {
+    return registerEndpoint(values).then(resp => {
+      console.log(resp.data);
+      handlePopupClose(true);
+      return;
+    });
+  };
+
+  const update = values => {
+    return updateEndpoint(editingEndpoint.id, values).then(resp => {
+      console.log(resp.data);
+      handlePopupClose(true);
+      return;
+    });
   };
 
   return (
@@ -129,6 +147,7 @@ export const RouteApp = ({
       <DestFormPopup
         open={openPopup === 'add'}
         onClose={handlePopupClose}
+        onSaveClick={register}
       />
       
       {/* Edit endpoint */}
@@ -137,6 +156,7 @@ export const RouteApp = ({
           initialValue={editInitialValue}
           open={openPopup === 'edit'}
           onClose={handlePopupClose}
+          onSaveClick={update}
         />
       )}
     </>

@@ -71,3 +71,25 @@ export const listEndpoints = () => {
   });
 };
 
+export const updateEndpoint = (id, {
+  label,
+  dest,
+  destDetails,
+}) => {
+  return getRequestInstance().then(request => {
+    console.log(id, label, dest, JSON.stringify(destDetails));
+    return request({
+      method: 'put',
+      url: `/api/endpoints/${id}`,
+      data: {
+        username: 'kuzichaki',
+        label,
+        dest,
+        destDetails,
+      },
+    }).then(resp => {
+      return resp.data;
+    });
+  });
+};
+
