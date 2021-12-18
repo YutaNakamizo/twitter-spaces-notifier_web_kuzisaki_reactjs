@@ -19,6 +19,7 @@ import {
 import { CommonHeader } from '~/components/CommonHeader';
 import { RouteTop } from '~/routes/RouteTop';
 import { RouteApp } from '~/routes/RouteApp';
+import { CommonFooter } from '~/components/CommonFooter';
 import {
   onAuthStateChanged,
 } from '~/apis/auth';
@@ -135,6 +136,10 @@ export const App = () => {
               }
             }
           })()}
+
+          <CommonFooter
+            mt={8}
+          />
         </div>
       </ThemeProvider>
     </AppContext.Provider>
