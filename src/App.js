@@ -19,6 +19,7 @@ import {
 import { CommonHeader } from '~/components/CommonHeader';
 import { RouteTop } from '~/routes/RouteTop';
 import { RouteApp } from '~/routes/RouteApp';
+import { RouteSignOut } from '~/routes/RouteSignOut';
 import { CommonFooter } from '~/components/CommonFooter';
 import {
   onAuthStateChanged,
@@ -119,6 +120,14 @@ export const App = () => {
                             }
                           }
                         })()
+                      }
+                    />
+
+                    <Route
+                      path="/signout"
+                      element={
+                        <RouteSignOut
+                        />
                       }
                     />
 
