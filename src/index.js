@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import '~/index.css';
 import { App } from '~/App';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,4 +16,6 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+serviceWorkerRegistration.register();
 
