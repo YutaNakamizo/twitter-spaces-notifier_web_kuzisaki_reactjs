@@ -47,6 +47,10 @@ export const RouteApp = ({
     reloadEndpoints();
   }, []);
 
+  const handleAddClick = () => {
+    setOpenPopup('add');
+  };
+
   const [ editingEndpoint, setEditingEndpoint ] = useState(null);
   const [ editInitialValue, setEditInitialValue ] = useState(null);
   const handleEditClick = endpoint => {
@@ -131,7 +135,7 @@ export const RouteApp = ({
                 />
               }
               onClick={e => {
-                setOpenPopup('add');
+                handleAddClick();
               }}
             >
               通知先を追加

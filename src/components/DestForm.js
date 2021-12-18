@@ -31,6 +31,8 @@ export const DestForm = ({
     valid: false,
     values: initialValue.destDetails,
   });
+  
+  const [ labelError, setLabelError ] = useState(null);
   const validate = ({
     label,
     destIndex,
@@ -49,10 +51,21 @@ export const DestForm = ({
       result.changed = true;
     }
 
+    const labelIsValid = label.trim() !== '';
+    const destIndexIsValid = -1 < destIndex && destIndex < destOptions.length;
+    const destDetailsIsValid = destDetails?.valid;
+
+    if(labelIsValid) {
+      setLabelError(null);
+    }
+    else {
+      setLabelError('ラベルは必須です.');
+    }
+
     if(
-      label.trim() !== ''
-      && -1 < destIndex && destIndex < destOptions.length
-      && destDetails?.valid
+      labelIsValid
+      && destIndexIsValid
+      && destDetailsIsValid
     ) {
       result.valid = true;
     }
@@ -85,6 +98,8 @@ export const DestForm = ({
     destDetails,
   ]);
 
+  const [ labelTouched, setLabelTouched ] = useState(false);
+
   return (
     <>
       <Box
@@ -93,12 +108,17 @@ export const DestForm = ({
         <TextField
           label="ラベル"
           defaultValue={initialValue.label}
+          error={labelTouched && Boolean(labelError)}
+          helperText={labelTouched ? labelError : undefined}
           variant="standard"
           placeholder={`例) ${destOptions[destIndex].sampleText}`}
           fullWidth
           autoFocus
           onChange={e => {
             setLabel(e.target.value);
+          }}
+          onBlur={e => {
+            setLabelTouched(true);
           }}
         />
       </Box>
