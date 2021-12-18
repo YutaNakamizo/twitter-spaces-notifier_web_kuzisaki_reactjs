@@ -4,6 +4,8 @@ import React, {
 } from 'react';
 import {
   TextField,
+  FormControl,
+  InputLabel,
   Select,
   MenuItem,
   Box,
@@ -85,66 +87,88 @@ export const DestForm = ({
 
   return (
     <>
-      <TextField
-        label="ラベル"
-        defaultValue={initialValue.label}
-        variant="standard"
-        placeholder={`例) ${destOptions[destIndex].sampleText}`}
-        fullWidth
-        autoFocus
-        onChange={e => {
-          setLabel(e.target.value);
-        }}
-      />
-
-      <Select
-        value={destOptions[destIndex].value}
-        defaultValue={destOptions[initialValue.destIndex].value}
-        onChange={e => {
-          setDestIndex(destOptions.findIndex(option => option.value === e.target.value));
-        }}
+      <Box
+        mb={4}
       >
-        {destOptions.map(({
-          value,
-          label,
-        }, index) => (
-          <MenuItem
-            key={index}
-            value={value}
-          >
-            {label}
-          </MenuItem>
-        ))}
-      </Select>
+        <TextField
+          label="ラベル"
+          defaultValue={initialValue.label}
+          variant="standard"
+          placeholder={`例) ${destOptions[destIndex].sampleText}`}
+          fullWidth
+          autoFocus
+          onChange={e => {
+            setLabel(e.target.value);
+          }}
+        />
+      </Box>
       
       <Box
+        mb={4}
       >
-        {(() => {
-          switch(destOptions[destIndex].value) {
-            case 'discord-webhook': {
-              return (
-                <>
-                  <DestFormOptionsDiscordWebhook
-                    initialValue={initialValue.destDetails}
-                    onChange={setDestDetails}
-                  />
-                </>
-              );
+        <Box
+          mb={.5}
+        >
+          <FormControl
+            variant="standard"
+          >
+            <InputLabel
+            >
+              通知先
+            </InputLabel>
+              
+            <Select
+              variant="standard"
+              value={destOptions[destIndex].value}
+              defaultValue={destOptions[initialValue.destIndex].value}
+              onChange={e => {
+                setDestIndex(destOptions.findIndex(option => option.value === e.target.value));
+              }}
+            >
+              {destOptions.map(({
+                value,
+                label,
+              }, index) => (
+                <MenuItem
+                  key={index}
+                  value={value}
+                >
+                  {label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+
+        <Box
+        >
+          {(() => {
+            switch(destOptions[destIndex].value) {
+              case 'discord-webhook': {
+                return (
+                  <>
+                    <DestFormOptionsDiscordWebhook
+                      initialValue={initialValue.destDetails}
+                      onChange={setDestDetails}
+                    />
+                  </>
+                );
+              }
+              case 'json': {
+                return (
+                  <>
+                    <DestFormOptionsJSON
+                      initialValue={initialValue.destDetails}
+                      onChange={setDestDetails}
+                    />
+                  </>
+                );
+              }
+              default: {
+              }
             }
-            case 'json': {
-              return (
-                <>
-                  <DestFormOptionsJSON
-                    initialValue={initialValue.destDetails}
-                    onChange={setDestDetails}
-                  />
-                </>
-              );
-            }
-            default: {
-            }
-          }
-        })()}
+          })()}
+        </Box>
       </Box>
     </>
   );

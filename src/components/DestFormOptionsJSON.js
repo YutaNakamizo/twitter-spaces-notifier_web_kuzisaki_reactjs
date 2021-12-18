@@ -4,6 +4,8 @@ import React, {
 } from 'react';
 import {
   Box,
+  FormControl,
+  InputLabel,
   Select,
   MenuItem,
   TextField,
@@ -95,22 +97,35 @@ export const DestFormOptionsJSON = ({
       <Box
         display="flex"
       >
-        <Select
-          value={method}
-          defaultValue={initialValue.method}
-          onChange={e => {
-            setMethod(e.target.value);
-          }}
+        <Box
+          mr={.5}
         >
-          {methodOptions.map(methodName => (
-            <MenuItem
-              value={methodName}
-              key={methodName}
+          <FormControl
+            variant="standard"
+          >
+            <InputLabel
             >
-              {methodName}
-            </MenuItem>
-          ))}
-        </Select>
+              Method
+            </InputLabel>
+            <Select
+              value={method}
+              defaultValue={initialValue.method}
+              onChange={e => {
+                setMethod(e.target.value);
+              }}
+            >
+              {methodOptions.map(methodName => (
+                <MenuItem
+                  value={methodName}
+                  key={methodName}
+                >
+                  {methodName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+
         <TextField
           label="送信先 URL"
           defaultValue={initialValue.url}

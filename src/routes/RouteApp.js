@@ -7,6 +7,8 @@ import {
   Container,
   Toolbar,
   Button,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -107,7 +109,10 @@ export const RouteApp = ({
   }, [
     openPopup,
   ]);
- 
+  
+  const theme = useTheme();
+  const upToSM = useMediaQuery(theme.breakpoints.up('sm'));
+
   return (
     <>
       <Container
@@ -181,6 +186,9 @@ export const RouteApp = ({
         open={openPopup === 'add'}
         onClose={handlePopupClose}
         onSaveClick={register}
+        fullScreen={!upToSM}
+        maxWidth="sm"
+        fullWidth
       />
       
       {/* Edit endpoint */}
@@ -190,6 +198,9 @@ export const RouteApp = ({
           open={openPopup === 'edit'}
           onClose={handlePopupClose}
           onSaveClick={update}
+          fullScreen={!upToSM}
+          maxWidth="sm"
+          fullWidth
         />
       )}
 

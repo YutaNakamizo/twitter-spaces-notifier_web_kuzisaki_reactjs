@@ -48,7 +48,6 @@ export const DestFormPopup = ({
 
   return (
     <Dialog
-      fullScreen
       scroll="paper"
       disableEscapeKeyDown
       {...props}
