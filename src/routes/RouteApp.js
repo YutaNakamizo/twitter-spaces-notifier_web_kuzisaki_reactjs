@@ -129,6 +129,9 @@ export const RouteApp = ({
           >
             <Button
               variant="contained"
+              disabled={
+                openPopup !== null
+              }
               disableElevation
               startIcon={
                 <AddIcon
@@ -152,7 +155,10 @@ export const RouteApp = ({
           >
             <Button
               variant="outlined"
-              disabled={loadingEndpoints}
+              disabled={
+                loadingEndpoints
+                || openPopup !== null
+              }
               startIcon={
                 <RefreshIcon
                 />
@@ -175,12 +181,12 @@ export const RouteApp = ({
           onEditClick={handleEditClick}
           editDisabled={
             loadingEndpoints
-            && openPopup !== null
+            || openPopup !== null
           }
           onRemoveClick={handleRemoveClick}
           removeDisabled={
             loadingEndpoints
-            && openPopup !== null
+            || openPopup !== null
           }
         />
       </Container>

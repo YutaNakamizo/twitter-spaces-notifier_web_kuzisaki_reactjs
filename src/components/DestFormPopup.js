@@ -46,6 +46,14 @@ export const DestFormPopup = ({
     onClose(false);
   };
 
+  const [ saving, setSaving ] = useState(false);
+  const handleSaveClick = e => {
+    setSaving(true);
+    onSaveClick(formValue.values).catch(err => {
+      setSaving(false);
+    });
+  };
+
   return (
     <Dialog
       scroll="paper"
@@ -62,6 +70,7 @@ export const DestFormPopup = ({
         <Box
         >
           <Button
+            disabled={saving}
             onClick={formValue.changed ? (
               e => confirmClose()
             ) : (
@@ -74,10 +83,9 @@ export const DestFormPopup = ({
             disabled={
               !formValue.changed
               || !formValue.valid
+              || saving
             }
-            onClick={e => {
-              onSaveClick(formValue.values);
-            }}
+            onClick={handleSaveClick}
           >
             保存
           </Button>
