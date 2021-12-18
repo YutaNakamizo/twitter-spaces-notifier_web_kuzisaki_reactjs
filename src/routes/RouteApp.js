@@ -45,15 +45,6 @@ export const RouteApp = ({
     reloadEndpoints();
   }, []);
 
-  const [ openPopup, setOpenPopup ] = useState(null);
-  const handlePopupClose = forceRefresh => {
-    setOpenPopup(null);
-    if(!forceRefresh) return;
-    
-    reloadEndpoints();
-    return;
-  };
-  
   const [ editingEndpoint, setEditingEndpoint ] = useState(null);
   const [ editInitialValue, setEditInitialValue ] = useState(null);
   const handleEditClick = endpoint => {
@@ -96,6 +87,27 @@ export const RouteApp = ({
     });
   };
 
+  const [ openPopup, setOpenPopup ] = useState(null);
+  const handlePopupClose = forceRefresh => {
+    setOpenPopup(null);
+    if(!forceRefresh) return;
+    
+    reloadEndpoints();
+    return;
+  };
+
+  useEffect(() => {
+    if(openPopup === null) {
+      setTimeout(() => {
+        setEditingEndpoint(null);
+        setEditInitialValue(null);
+        setRemovingEndpoint(null);
+      }, 500);
+    }
+  }, [
+    openPopup,
+  ]);
+ 
   return (
     <>
       <Container
