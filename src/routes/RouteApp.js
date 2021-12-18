@@ -14,7 +14,11 @@ import { EndpointsList } from '~/components/EndpointsList';
 import { DestFormPopup } from '~/components/DestFormPopup';
 import {
   listEndpoints,
+  registerEndpoint,
+  updateEndpoint,
 } from '~/apis/backend';
+
+const destOptions = require('~/destOptions');
 
 export const RouteApp = ({
   ...props
@@ -46,6 +50,34 @@ export const RouteApp = ({
     
     reloadEndpoints();
     return;
+  };
+  
+  const [ editingEndpoint, setEditingEndpoint ] = useState(null);
+  const [ editInitialValue, setEditInitialValue ] = useState(null);
+  const handleEditClick = endpoint => {
+    setEditingEndpoint(endpoint);
+    setEditInitialValue({
+      label: endpoint.label,
+      destIndex: destOptions.findIndex(d => d.value === endpoint.dest),
+      destDetails: endpoint.destDetails,
+    });
+    setOpenPopup('edit');
+  };
+
+  const register = values => {
+    return registerEndpoint(values).then(resp => {
+      console.log(resp.data);
+      handlePopupClose(true);
+      return;
+    });
+  };
+
+  const update = values => {
+    return updateEndpoint(editingEndpoint.id, values).then(resp => {
+      console.log(resp.data);
+      handlePopupClose(true);
+      return;
+    });
   };
 
   return (
@@ -103,13 +135,30 @@ export const RouteApp = ({
 
         <EndpointsList
           endpoints={endpoints}
+          onEditClick={handleEditClick}
+          editDisabled={
+            loadingEndpoints
+            && openPopup !== null
+          }
         />
       </Container>
-
+      
+      {/* Add new endpoint */}
       <DestFormPopup
-        open={openPopup !== null}
+        open={openPopup === 'add'}
         onClose={handlePopupClose}
+        onSaveClick={register}
       />
+      
+      {/* Edit endpoint */}
+      {editingEndpoint !== null && (
+        <DestFormPopup
+          initialValue={editInitialValue}
+          open={openPopup === 'edit'}
+          onClose={handlePopupClose}
+          onSaveClick={update}
+        />
+      )}
     </>
   );
 };
