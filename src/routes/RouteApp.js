@@ -12,6 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { EndpointsList } from '~/components/EndpointsList';
 import { DestFormPopup } from '~/components/DestFormPopup';
+import { DestRemovePopup } from '~/components/DestRemovePopup';
 import {
   listEndpoints,
   registerEndpoint,
@@ -64,6 +65,12 @@ export const RouteApp = ({
     setOpenPopup('edit');
   };
 
+  const [ removingEndpoint, setRemovingEndpoint ] = useState(null);
+  const handleRemoveClick = endpoint => {
+    setRemovingEndpoint(endpoint);
+    setOpenPopup('remove');
+  }
+
   const register = values => {
     return registerEndpoint(values).then(resp => {
       console.log(resp.data);
@@ -78,6 +85,10 @@ export const RouteApp = ({
       handlePopupClose(true);
       return;
     });
+  };
+
+  const remove = id => {
+   
   };
 
   return (
@@ -140,6 +151,11 @@ export const RouteApp = ({
             loadingEndpoints
             && openPopup !== null
           }
+          onRemoveClick={handleRemoveClick}
+          removeDisabled={
+            loadingEndpoints
+            && openPopup !== null
+          }
         />
       </Container>
       
@@ -157,6 +173,16 @@ export const RouteApp = ({
           open={openPopup === 'edit'}
           onClose={handlePopupClose}
           onSaveClick={update}
+        />
+      )}
+
+      {/* Remove endpoint */}
+      {removingEndpoint !== null && (
+        <DestRemovePopup
+          open={openPopup === 'remove'}
+          onClose={handlePopupClose}
+          onRemoveClick={remove}
+          endpoint={removingEndpoint}
         />
       )}
     </>
