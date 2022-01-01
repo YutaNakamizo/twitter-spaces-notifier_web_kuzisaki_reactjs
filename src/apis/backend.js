@@ -49,7 +49,7 @@ export const registerEndpoint = ({
       method: 'post',
       url: '/api/endpoints',
       data: {
-        username: 'kuzichaki',
+        usernames: [ 'kuzichaki' ],
         label,
         dest,
         destDetails,
@@ -82,7 +82,7 @@ export const updateEndpoint = (id, {
       method: 'put',
       url: `/api/endpoints/${id}`,
       data: {
-        username: 'kuzichaki',
+        usernames: [ 'kuzichaki' ],
         label,
         dest,
         destDetails,
