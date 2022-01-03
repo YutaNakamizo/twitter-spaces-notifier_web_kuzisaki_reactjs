@@ -30,6 +30,35 @@ export const CommonFooter = ({
             paragraph
             align="center"
           >
+            キービジュアル: YuukaUta (
+            <Link
+              href="https://twitter.com/YuukaUta"
+              target="_blank"
+            >
+              Twitter
+            </Link>
+            &nbsp;|&nbsp;
+            <Link
+              href="https://www.pixiv.net/users/24360209"
+              target="_blank"
+            >
+              pixiv
+            </Link>
+            &nbsp;|&nbsp;
+            <Link
+              href="https://skeb.jp/@YuukaUta"
+              target="_blank"
+            >
+              Skeb
+            </Link>
+            )
+          </Typography>
+
+          <Typography
+            variant="caption"
+            paragraph
+            align="center"
+          >
             この Web サイトおよび通知システムは&nbsp;
             <Link
               href="https://ggtk.app"
