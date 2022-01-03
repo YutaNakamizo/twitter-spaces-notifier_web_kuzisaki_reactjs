@@ -35,12 +35,14 @@ export const CommonHeader = ({
       >
         <Box
         >
-          <Typography
-            component="h1"
-            variant="h6"
-          >
-            #くじスペ 通知 bot
-          </Typography>
+          <Box
+            component="img"
+            display="block"
+            src="/images/logo_black.png"
+            sx={theme => ({
+              height: theme.spacing(4),
+            })}
+          />
         </Box>
 
         <Box
