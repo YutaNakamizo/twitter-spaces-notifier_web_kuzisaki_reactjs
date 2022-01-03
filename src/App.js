@@ -73,9 +73,6 @@ export const App = () => {
               default: {
                 return (
                   <>
-                    <CommonHeader
-                    />
-
                     <Routes
                     >
                       <Route
@@ -115,8 +112,17 @@ export const App = () => {
                               }
                               default: {
                                 return (
-                                  <RouteApp
-                                  />
+                                  <>
+                                    <CommonHeader
+                                    />
+
+                                    <RouteApp
+                                    />
+
+                                    <CommonFooter
+                                      mt={8}
+                                    />
+                                  </>
                                 );
                               }
                             }
@@ -142,10 +148,6 @@ export const App = () => {
                         }
                       />
                     </Routes>
-
-                    <CommonFooter
-                      mt={8}
-                    />
                   </>
                 );
               }

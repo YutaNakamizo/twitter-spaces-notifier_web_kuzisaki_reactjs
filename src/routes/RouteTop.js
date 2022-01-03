@@ -2,12 +2,16 @@ import React from 'react';
 import {
   Box,
   Container,
+  Paper,
   Typography,
   Link,
   Avatar,
   Button,
   useTheme,
+  useMediaQuery,
 } from '@mui/material';
+import { SignIn } from '~/components/SignIn';
+import { CommonFooter } from '~/components/CommonFooter';
 import { ReactComponent as TwitterSpaceIconMini } from '~/images/twitter-space-mini.svg';
 import {
   signIn,
@@ -17,173 +21,117 @@ export const RouteTop = ({
   ...props
 }) => {
   const theme = useTheme();
+  const wide = useMediaQuery('(min-width: 520px)');
 
   const handleSignInClick = e => {
     signIn();
   };
 
   return (
-    <Container
+    <Box
+      sx={{
+        background: `linear-gradient(180deg, #D1E1ED, ${theme.palette.background.default})`,
+      }}
     >
-      <Box
-        mt={4}
-        mb={6}
+      <Container
+        maxWidth="lg"
+        disableGutters
+        sx={{
+          overflow: 'hidden',
+          position: 'relative',
+        }}
       >
-        <Typography
-          align="center"
-          variant="h3"
-          component="div"
-        >
-          <Link
-            href="https://twitter.com/search?q=%23%E3%81%8F%E3%81%98%E3%82%B9%E3%83%9A&f=live"
-            target="_blank"
-          >
-            #くじスペ
-          </Link>
-          &nbsp;開始時に通知を送信
-        </Typography>
-      </Box>
 
-      <Box
-        mt={4}
-        mb={4}
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
         <Box
-          position="relative"
+          component="img"
+          display="block"
+          src="/images/kz_bg_30.png"
+          width={wide ? '58%' : '100%'}
           sx={{
-            width: '141.5px',
-            height: '141.5px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
           }}
+        />
+
+        <Box
+          position="absolute"
+          top={0}
+          left={0}
+          width="100%"
+          height="100%"
+          display="flex"
+          alignItems="center"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
         >
+          <Box
+            height={wide ? '45%' : '50%'}
+          >
+          </Box>
+          
           <Box
             position="relative"
-            sx={{
-              width: '100%',
-              height: '100%',
-            }}
+            mr={2}
+            ml={2}
           >
-            <Box
-              position="absolute"
-              sx={{
-                top: '50%',
-                left: '50%',
-                transform: 'translateX(-50%) translateY(-50%)',
-                width: '100%',
-                height: '100%',
-                backgroundImage: 'linear-gradient(61.63deg, rgb(45, 66, 255) -15.05%, rgb(156, 99, 250) 104.96%)',
-                borderRadius: '50%',
-              }}
-            />
-
-            <Box
-              position="absolute"
-              sx={{
-                top: '50%',
-                left: '50%',
-                transform: 'translateX(-50%) translateY(-50%)',
-                width: 'calc(100% - 12px)',
-                height: 'calc(100% - 12px)',
-                backgroundColor: 'background.default',
-                borderRadius: '50%',
-              }}
-            />
-
-            <Avatar
-              src="https://pbs.twimg.com/profile_images/1439454062533955586/TdE7SUqL_400x400.jpg"
+            <Paper
               sx={{
                 position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translateX(-50%) translateY(-50%)',
-                width: 'calc(100% - 20px)',
-                height: 'calc(100% - 20px)',
-              }}
-            />
-          </Box>
-
-          <Box
-            position="absolute"
-            sx={{
-              right: '-4px',
-              bottom: '-4px',
-              width: '30%',
-              height: '30%',
-            }}
-          >
-            <Box
-              position="absolute"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              sx={{
                 width: '100%',
                 height: '100%',
-                backgroundImage: 'linear-gradient(61.63deg, rgb(45, 66, 255) -15.05%, rgb(156, 99, 250) 104.96%)',
-                borderWidth: '4px',
-                borderStyle: 'solid',
-                borderColor: 'background.default',
-                borderRadius: '50%',
-                boxSizing: 'border-box',
+                opacity: .85,
               }}
+            />
+            
+            <Box
+              position="relative"
+              m={wide ? 3 : 2}
             >
-              <TwitterSpaceIconMini
-                style={{
-                  height: '18.75px',
-                  color: '#fff',
-                  fill: 'currentcolor',
-                  padding: '2px',
+              <Box
+                component="img"
+                display="block"
+                src={wide ? '/images/logo_black.png' : '/images/logo_2lines_black.png'}
+                width="100%"
+                sx={wide ? {
+                  maxWidth: theme.breakpoints.values.sm,
+                } : {
+                  maxWidth: theme.breakpoints.values.sm / 2,
+                  marginRight: 'auto',
+                  marginLeft: 'auto',
                 }}
               />
+              
+              {wide && (
+                <SignIn
+                  mt={3}
+                  mb={3}
+                  onSignInClick={handleSignInClick}
+                />
+              )}
             </Box>
           </Box>
         </Box>
-      </Box>
-      
-      <Box
-        mt={4}
-        mb={4}
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-      >
-        <Button
-          variant="contained"
-          size="large"
-          onClick={handleSignInClick}
-        >
-          さっそく通知を設定する
-        </Button>
 
-        <Box
-          mt={1}
+
+      </Container>
+
+      {!wide && (
+        <Container
+          maxWidth="lg"
         >
-          <Typography
-            align="center"
-            variant="caption"
-            component="div"
-          >
-            通知設定には Twitter アカウントでのログインが必要です.
-          </Typography>
-          <Typography
-            align="center"
-            variant="caption"
-            component="div"
-          >
-            新規ログインを行った時点で&nbsp;
-            <Link
-              href="https://ggtk.app/terms"
-              target="_blank"
-            >
-              利用規約
-            </Link>
-            &nbsp;に同意したものとみなされます.
-          </Typography>
-        </Box>
-      </Box>
-    </Container>
+          <SignIn
+            mt={6}
+            mb={6}
+            onSignInClick={handleSignInClick}
+          />
+        </Container>
+      )}
+ 
+      <CommonFooter
+        position="relative"
+      />
+    </Box>
   );
 };
 
