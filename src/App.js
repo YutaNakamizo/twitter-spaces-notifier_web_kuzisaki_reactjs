@@ -25,6 +25,12 @@ import { CommonFooter } from '~/components/CommonFooter';
 import {
   onAuthStateChanged,
 } from '~/apis/auth';
+import {
+  analytics,
+} from '~/apis/firebase';
+import {
+  logEvent,
+} from 'firebase/analytics';
 
 const theme = createTheme({
   palette: {
@@ -81,6 +87,10 @@ export const App = () => {
                           (() => {
                             switch(user) {
                               case null: {
+                                logEvent(analytics, 'page_view', {
+                                  page_path: '/',
+                                  page_title: 'Top Page',
+                                });
                                 return (
                                   <RouteTop
                                   />
@@ -111,6 +121,10 @@ export const App = () => {
                                 );
                               }
                               default: {
+                                logEvent(analytics, 'page_view', {
+                                  page_path: '/app',
+                                  page_title: 'Endpoints List',
+                                });
                                 return (
                                   <>
                                     <CommonHeader

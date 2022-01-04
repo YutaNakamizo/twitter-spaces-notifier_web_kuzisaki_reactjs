@@ -22,6 +22,12 @@ import {
   updateEndpoint,
   removeEndpoint,
 } from '~/apis/backend';
+import {
+  analytics,
+} from '~/apis/firebase';
+import {
+  logEvent,
+} from 'firebase/analytics';
 
 const destOptions = require('~/destOptions');
 
@@ -71,6 +77,9 @@ export const RouteApp = ({
   }
 
   const register = values => {
+    logEvent(analytics, 'endpoint_register', {
+      dest: values.dest,
+    });
     return registerEndpoint(values).then(resp => {
       console.log(resp.data);
       handlePopupClose(true);
@@ -79,6 +88,9 @@ export const RouteApp = ({
   };
 
   const update = values => {
+    logEvent(analytics, 'endpoint_update', {
+      dest: values.dest,
+    });
     return updateEndpoint(editingEndpoint.id, values).then(resp => {
       console.log(resp.data);
       handlePopupClose(true);
@@ -87,6 +99,7 @@ export const RouteApp = ({
   };
 
   const remove = id => {
+    logEvent(analytics, 'endpoint_remove');
     return removeEndpoint(removingEndpoint.id).then(resp => {
       console.log(resp);
       handlePopupClose(true);
