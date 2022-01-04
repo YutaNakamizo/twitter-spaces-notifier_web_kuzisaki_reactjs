@@ -16,6 +16,12 @@ import { ReactComponent as TwitterSpaceIconMini } from '~/images/twitter-space-m
 import {
   signIn,
 } from '~/apis/auth';
+import {
+  analytics,
+} from '~/apis/firebase';
+import {
+  logEvent,
+} from 'firebase/analytics';
 
 export const RouteTop = ({
   ...props
@@ -24,6 +30,9 @@ export const RouteTop = ({
   const wide = useMediaQuery('(min-width: 520px)');
 
   const handleSignInClick = e => {
+    logEvent(analytics, 'login', {
+      method: 'Twitter',
+    });
     signIn();
   };
 
