@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Box,
+  Paper,
   Divider,
   Container,
   Typography,
@@ -19,15 +20,48 @@ export const CommonFooter = ({
       />
 
       <Box
-        pt={4}
-        pb={4}
+        pt={2}
+        pb={2}
       >
         <Container
           maxWidth="md"
         >
+          <Box
+            mb={2}
+          >
+            <Paper
+            >
+              <Box
+                p={2}
+              >
+                <Typography
+                  variant="caption"
+                  component="p"
+                  align="center"
+                >
+                  くじスペ通知 bot は現在ベータテスト段階です.
+                </Typography>
+                <Typography
+                  variant="caption"
+                  component="p"
+                  align="center"
+                >
+                  お気付きの点があれば, 些細なことでも構いませんので不具合や改善要望などの&nbsp;
+                  <Link
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSfpuXj-S-NI90JgizARWlgt537XRQGOhpZqr-DGS9oAplL3WQ/viewform?usp=sf_link"
+                    target="_blank"
+                  >
+                    フィードバック
+                  </Link>
+                  &nbsp;を送信し, サービスの改善にご協力ください.
+                </Typography>
+              </Box>
+            </Paper>
+          </Box>
+
           <Typography
             variant="caption"
-            paragraph
+            component="p"
             align="center"
           >
             キービジュアル: YuukaUta (
