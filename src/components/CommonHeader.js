@@ -39,9 +39,9 @@ export const CommonHeader = ({
             component="img"
             display="block"
             src="/images/logo_black.png"
-            sx={theme => ({
-              height: theme.spacing(4),
-            })}
+            sx={{
+              height: theme => theme.spacing(4),
+            }}
           />
         </Box>
 
