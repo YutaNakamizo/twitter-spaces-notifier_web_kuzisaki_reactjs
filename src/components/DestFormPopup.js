@@ -28,13 +28,12 @@ export const DestFormPopup = ({
   initialValue,
   ...props
 }) => {
-  const [ formValue, setFormValue ] = useState(
-    {
-      changed: false,
-      valid: false,
-      values: initialValue,
-    }
-  );
+  const defaultFormValue = {
+    changed: false,
+    valid: false,
+    values: initialValue,
+  };
+  const [ formValue, setFormValue ] = useState(defaultFormValue);
   useEffect(() => {
     console.log(formValue);
   }, [
@@ -54,6 +53,15 @@ export const DestFormPopup = ({
       setSaving(false);
     });
   };
+
+  useEffect(() => {
+    if(!props.open) {
+      setFormValue(defaultFormValue);
+      setSaving(false);
+    }
+  }, [
+    props.open,
+  ]);
 
   return (
     <Dialog
